@@ -34,7 +34,11 @@ export class GameService {
     return this.gameRepository.save(newGame);
   }
 
-  async remove(date: number, team1: Team, team2: Team) {
-    return this.gameRepository.remove(await this.getOne(date, team1, team2));
+  async remove(date: number, team1Id: number, team2Id: number) {
+    return this.gameRepository.remove(
+      await this.gameRepository.findOne({
+        where: { team1: team1Id, team2: team2Id, date },
+      }),
+    );
   }
 }
