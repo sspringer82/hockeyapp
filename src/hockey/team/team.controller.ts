@@ -32,12 +32,14 @@ export class TeamController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOkResponse({ description: 'Get one team', type: Team, isArray: false })
   getOne(@Param('id') id: string) {
     return this.teamService.getOne(parseInt(id, 10));
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -64,6 +66,7 @@ export class TeamController {
   }
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   @ApiOkResponse({ description: 'Create a team', type: Team, isArray: false })
   @UseInterceptors(
     FileInterceptor('file', {
@@ -88,6 +91,7 @@ export class TeamController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOkResponse({ description: 'Delete a team' })
   remove(@Param('id') id: string) {
     this.teamService.remove(parseInt(id, 10));
